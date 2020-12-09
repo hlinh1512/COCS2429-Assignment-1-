@@ -11,12 +11,12 @@
 
 import random #import random library
 import turtle #import turtle library
-def draw_mark_histogram(list, hd, di, cr, pa, nn): #function to draw the histogram
+def draw_mark_histogram(hd, di, cr, pa, nn): #function to draw the histogram
     scr = turtle.Screen() #create a screen
     scr.setup(800,800)
     t = turtle.Turtle()
     t.pensize(3)
-    t.speed(10)
+    #t.speed(10) #put the speed if you want to speed the drawing up
     t.penup()
     t.goto(-230,-250) #starting point (0,0)
     t.pendown()
@@ -74,88 +74,62 @@ def draw_mark_histogram(list, hd, di, cr, pa, nn): #function to draw the histogr
     t.pendown()
 
 
+    #draw NN,PA,CR,DI,HD texts
+    t.penup()
+    t.right(90)
+    t.forward(50)
+    t.left(90)
+    t.forward(110+33/2)
+    mark_text = ["NN", "PA", "CR", "DI", "HD"] #list of mark texts
+    t.pendown()
+    for i in range (0,len(mark_text)):
+        t.write(mark_text[i], font=("Arial", 18, "bold"))
+        t.penup()
+        t.forward(66)
+    t.goto(-230,-250)
+    t.pendown()
+
+
 
 #DRAW MARK CHARTS:
 
     t.penup()
     t.forward(110)
-    t.fillcolor("blue")
+    t.fillcolor('#00A2E8') #color of charts
     t.pendown()
-    #draw rectangle
 
 
-    #NN rectangle
-    for i in range(0,2):
-        t.begin_fill()
+    #draw charts
+    mark_value = [nn, pa, cr, di, hd] #list of number of students with mark respectively
+    for i in range (0, len(mark_value)):
+        for k in range (0,2):
+            t.begin_fill()
+            t.forward(66)
+            t.left(90)
+            t.forward(mark_value[i] * 5)  # Times 5 because the ratio on graph 1 students = 5 pixels
+            t.left(90)
+            t.end_fill()
+        #draw text of numbers on top of the chart.
+        t.penup()
+        t.left(90)
+        t.forward(mark_value[i] * 5 + 20)
+        t.right(90)
+        t.forward(18)
+        t.write(mark_value[i], font=("Arial", 18, "bold"))
+        t.backward(33/2)
+        t.left(90)
+        t.backward(mark_value[i] * 5 +20)
+        t.right(90)
+        #move to next chart.
+        t.penup()
         t.forward(66)
-        t.left(90)
-        t.forward(nn * 5) #Times 5 because the ratio on graph 1 students = 5 pixels
-        t.left(90)
-        t.end_fill()
-    t.penup()
-    t.forward(66)
-    t.pendown()
-    #PA rectangle
-
-    for i in range(0,2):
-        t.begin_fill()
-        t.forward(66)
-        t.left(90)
-        t.forward(pa * 5) #Times 5 because the ratio on graph 1 students = 5 pixels
-        t.left(90)
-        t.end_fill()
-    t.penup()
-    t.forward(66)
-    t.pendown()
-
-    # CR rectangle
-
-    for i in range(0, 2):
-        t.begin_fill()
-        t.forward(66)
-        t.left(90)
-        t.forward(cr * 5)  # Times 5 because the ratio on graph 1 students = 5 pixels
-        t.left(90)
-        t.end_fill()
-    t.penup()
-    t.forward(66)
-    t.pendown()
-
-    # di rectangle
-
-    for i in range(0, 2):
-        t.begin_fill()
-        t.forward(66)
-        t.left(90)
-        t.forward(di * 5)  # Times 5 because the ratio on graph 1 students = 5 pixels
-        t.left(90)
-        t.end_fill()
-    t.penup()
-    t.forward(66)
-    t.pendown()
-
-    # HD rectangle
-
-    for i in range(0, 2):
-        t.begin_fill()
-        t.forward(66)
-        t.left(90)
-        t.forward(hd * 5)  # Times 5 because the ratio on graph 1 students = 5 pixels
-        t.left(90)
-        t.end_fill()
-    t.penup()
-    t.forward(66)
-    t.pendown()
+        t.pendown()
 
 
 
 
 
     scr.exitonclick()
-
-
-
-#def main():
 
 
 if __name__ == "__main__":
@@ -169,7 +143,7 @@ if __name__ == "__main__":
     cr = 0
     pa = 0
     nn = 0
-    for i in range(0, len(mark)):
+    for i in range(0, len(mark)): #check grade and count number of student each bucket.
         if mark[i] >= 80:
             hd += 1
         elif mark[i] >= 70:
@@ -180,13 +154,13 @@ if __name__ == "__main__":
             pa += 1
         else:
             nn += 1
-    print('Numbers of NN ' + str(nn))
-    print('Numbers of PA ' + str(pa))
-    print('Numbers of CR ' + str(cr))
-    print('Numbers of DI ' + str(di))
-    print('Numbers of HD ' + str(hd))
+    print('Number of NN students: ' + str(nn))
+    print('Number of PA students:  ' + str(pa))
+    print('Number of CR students:  ' + str(cr))
+    print('Number of DI students:  ' + str(di))
+    print('Number of HD students:  ' + str(hd))
 
-    draw_mark_histogram(mark, hd, di, cr, pa, nn)
+    draw_mark_histogram(hd, di, cr, pa, nn)
 
 
 
