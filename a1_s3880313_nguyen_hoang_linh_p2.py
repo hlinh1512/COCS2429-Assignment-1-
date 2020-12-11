@@ -149,41 +149,108 @@ def draw_clock():
 
 
 #DRAW 3 HANDS OF THE CLOCK
-    # (0,0) stamp a red circle center of the clock
 
-    t.shape("circle")
-    t.color("red")
-    t.stamp()
-    t.color("black")
+
+    # #hour hand
+    # t.pensize(10)
+    # t.setheading(90)
+    # t.pendown()
+    # t.backward(20)
+    # t.forward(130)
+    # t.shape("arrow")
+    # t.stamp()
+    # t.penup()
+    # t.goto(0,100) #back to center position
+
+    # #minute hand
+    # t.setheading(0)
+    # t.pendown()
+    # t.backward(20)
+    # t.forward(225)
+    # t.stamp()
+    # t.penup()
+    # t.goto(0,100) #back to center position
+    # t.pendown()
+
+    # (0,0) stamp a red circle center of the clock\
     t.setheading(90)
-    t.pensize(8)
-
-    #hour hand
-    t.pendown()
-    t.backward(20)
-    t.forward(130)
-    t.shape("arrow")
-    t.stamp()
     t.penup()
-    t.goto(0,100) #back to center position
-
-    #minute hand
+    t.backward(3)  # backward the turtle
+    t.pendown()
     t.setheading(0)
+    t.pensize(4)
+    t.color("red")
+    t.fillcolor("red")
     t.pendown()
-    t.backward(20)
-    t.forward(225)
-    t.stamp()
+    t.begin_fill()
+    t.circle(5)
+    t.end_fill()
     t.penup()
-    t.goto(0,100) #back to center position
+    t.setheading(90)
+    t.forward(3)
+    t.setheading(0)
+    t.color("black")
+    t.pendown()
 
-    #second hand
-    t.left(45)
-    t.shape("circle")
-    t.stamp()
-    t.pensize(2)
-    t.backward(5)
-    t.left(45+90+30)
-    t.forward(2)
+    t.hideturtle()
+
+    # #second hand
+    # t.pensize(3)
+    # t.color("red")
+    # t.left(45)
+    # t.forward(210)
+    # t.stamp()
+
+
+#get current time
+    curr_time = time.localtime()
+    curr_hour = curr_time.tm_hour
+    curr_min = curr_time.tm_min
+    curr_sec = curr_time.tm_sec
+
+    #turtle to draw the second hand
+    t_sec = turtle.Turtle() #create another turtle to draw second-hand.
+    t_sec.penup()
+    t_sec.goto(0,100) #set t1 to the center of the circle
+    t_sec.setheading(90) #set the second-hand to 0 second
+    t_sec.right(curr_sec * (360/60)) #set the second-hand direction to the current time second direction on the clock
+    t_sec.pendown()
+
+
+
+    #turtle to draw the minute hand
+    t_min = turtle.Turtle()
+    t_min.penup()
+    t_min.goto(0,100)
+    t_min.setheading(90)
+    t_min.right(curr_min * (360/60))
+    t_min.pendown()
+
+
+    while True:
+        for k in range (0,60):
+            t_min.right(360/60)
+            t_min.pensize(8)
+            t_min.forward(205)
+            t_min.stamp()
+            t_min.penup()
+            t_min.backward(205)
+            t_min.pendown()
+            for j in range (0,60):
+               t_sec.right(360/60)
+               t_sec.pensize(3)
+               t_sec.color("red")
+               t_sec.forward(210)
+               t_sec.stamp()
+               t_sec.penup()
+               t_sec.backward(210)
+               t_sec.pendown()
+               t_sec.clear()
+               time.sleep(1) #delay the time to make it moves 1 second in real time
+               if (curr_sec == 0):
+                   break #dang het 1 vong ma no moi' cap nhat
+
+            t_min.clear()
 
 
 
@@ -191,6 +258,8 @@ def draw_clock():
 
 
 
+
+#main function
 if __name__ == "__main__":
     scr = turtle.Screen()
     scr.setup(800,800)
